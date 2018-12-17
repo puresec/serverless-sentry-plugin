@@ -31,7 +31,7 @@ class Sentry {
 			"after:deploy:deploy": () => BbPromise.bind(this)
 				.then(this.createSentryRelease)
 				.then(this.deploySentryRelease),
-			
+
 			"before:invoke:local:invoke": () => BbPromise.bind(this)
 				.then(this.validate)
 				.then(this.setRelease)
@@ -79,7 +79,8 @@ class Sentry {
 
 			// Validate Sentry options
 			if (!this.sentry.dsn) {
-				return BbPromise.reject(new this._serverless.classes.Error("Sentry DSN must be set."));
+				this._serverless.cli.log("Sentry: Sentry DSN wasn't found, " +
+					"make sure you provide SENTRY_DSN env var for the plugin to work correctly");
 			}
 
 			// Set default option values
